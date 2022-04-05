@@ -126,18 +126,20 @@ $(document).ready(function () {
     });
     $("body").on("mouseup", () => {
         if ($("#notesJSOptions, #notesJSComment, #summaryPage").css("display") == "none" && window.getSelection().type == "Range") {
+            if (selectMode > 0) {
+                if (window.getSelection) {
+                    if (window.getSelection().empty) {  // Chrome
+                        window.getSelection().empty();
+                    } else if (window.getSelection().removeAllRanges) {  // Firefox
+                        window.getSelection().removeAllRanges();
+                    }
+                }
+            }
             if (selectMode == 1) {
                 mark();
             }
             else if (selectMode == 2) {
                 comment();
-            }
-            if (window.getSelection) {
-                if (window.getSelection().empty) {  // Chrome
-                    window.getSelection().empty();
-                } else if (window.getSelection().removeAllRanges) {  // Firefox
-                    window.getSelection().removeAllRanges();
-                }
             }
         }
     });
